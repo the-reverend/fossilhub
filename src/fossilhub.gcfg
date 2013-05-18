@@ -1,0 +1,4 @@
+[server]
+port = 8081
+[fossil]
+path = /home/rev/fossil/
