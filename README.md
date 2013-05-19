@@ -5,15 +5,11 @@ use nginx and go to fill in some gaps in the fossil ui
 
 ## prerequisites
 
-* install fossil
+* install fossil and nginx
 
-		sudo apt-get install fossil
+		sudo apt-get install fossil nginx
 
 * install go; follow the instructions [here](http://golang.org/doc/install)
-
-* install nginx
-
-		sudo apt-get install nginx
 
 ## setup your fossil repository
 
