@@ -2,22 +2,12 @@ package main
 
 import "io/ioutil"
 import "fmt"
-import "log"
 import "strings"
 import "strconv"
 import "net/http"
-import "code.google.com/p/gcfg"
+import "flag"
 
-type Config struct {
-	Server struct {
-		Port int
-	}
-	Fossil struct {
-		Path string
-	}
-}
-
-func handler(w http.ResponseWriter, r *http.Request, c *Config) {
+func handler(w http.ResponseWriter, r *http.Request, path string) {
 	fmt.Fprintf(w, "<html>")
 	fmt.Fprintf(w, "<header>")
 	fmt.Fprintf(w, "<title>Fossil Repositories</title>")
@@ -25,7 +15,7 @@ func handler(w http.ResponseWriter, r *http.Request, c *Config) {
 	fmt.Fprintf(w, "<body>")
 	fmt.Fprintf(w, "<h1>Fossil Repositories</h1>")
 
-	finfos, err := ioutil.ReadDir(c.Fossil.Path)
+	finfos, err := ioutil.ReadDir(path)
 	if err == nil {
 		fmt.Fprintf(w, "<ul>")
 		for _, fi := range finfos {
@@ -45,15 +35,12 @@ func handler(w http.ResponseWriter, r *http.Request, c *Config) {
 }
 
 func main() {
-	var cfg Config
-	err := gcfg.ReadFileInto(&cfg, "fossilhub.gcfg")
-	if err != nil {
-		log.Fatalf("invalid config file: %s", err)
-	}
-	fmt.Println(cfg)
+	var port = flag.Int("p",8081,"Port to listen on")
+	var path = flag.String("r","/home/rev/fossil/","Repositories folder")
+	flag.Parse()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handler(w, r, &cfg)
+		handler(w, r, *path)
 	})
-	http.ListenAndServe(":"+strconv.Itoa(cfg.Server.Port), nil)
+	http.ListenAndServe(":"+strconv.Itoa(*port), nil)
 }
