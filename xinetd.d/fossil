@@ -1,0 +1,19 @@
+service fossil
+{
+        type = UNLISTED
+        socket_type = stream
+        protocol = tcp
+        wait = no
+        user = root
+        disable = no
+        server = /usr/bin/fossil
+
+	# sample line for /etc/services :
+	# fossil               8080/tcp
+        # HTTP port to listen to (the same as the one in '/etc/services')
+        port = 8080
+        # The path that the fossil repos are stored
+        server_args = http /home/rev/fossil
+        # Restrict access
+        only_from = 127.0.0.1 localhost
+}
