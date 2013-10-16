@@ -3,6 +3,7 @@
 title: RevealMe Presentations
 theme: sky
 transition: default
+horizOnly: true
 
 -->
 
