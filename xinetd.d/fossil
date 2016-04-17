@@ -6,7 +6,7 @@ service fossil
         wait = no
         user = root
         disable = no
-        server = /usr/bin/fossil
+        server = /usr/local/bin/fossil
 
 	# sample line for /etc/services :
 	# fossil               8080/tcp

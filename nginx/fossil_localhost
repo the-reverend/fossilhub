@@ -1,3 +1,4 @@
+# SSL help : https://www.digitalocean.com/community/articles/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04/
 upstream fossil_localhost {
 	server  127.0.0.1:8080;
 }
@@ -7,8 +8,16 @@ upstream fossilhub_localhost {
 }
 
 server {
-	listen       80;
-	server_name  fossil.ronwilson.org;
+	# uncomment this to enable http access
+	listen 80;
+	listen 443 ssl;
+	server_name fossil.ronwilson.org;
+	ssl_certificate /etc/nginx/ssl/server.crt;
+	ssl_certificate_key /etc/nginx/ssl/server.key;
+
+	if ($server_port = 80) {
+		rewrite .* https://$host$request_uri permanent;
+	}
 
 	location ~ ^/.+ {
 		try_files $uri @fossil;

@@ -23,6 +23,7 @@ func handler(w http.ResponseWriter, r *http.Request, path string) {
 			if parts[len(parts)-1] == "fossil" {
 				front := strings.Join(parts[0:len(parts)-1], ".")
 				fmt.Fprintf(w, "<li><a href='http://fossil.ronwilson.org/%s'>%s</a></li>", front, fi.Name())
+			//	fmt.Fprintf(w, "<li><a href='https://fossil.ronwilson.org/%s/index'>%s</a></li>", front, fi.Name())
 			}
 		}
 		fmt.Fprintf(w, "</ul>")
